@@ -5,7 +5,7 @@ const CreditCard = () => {
   const groups = cardNumber.match(/.{1,4}/g)
 
   return (
-    <section className="bg-slate-50 w-[370px] px-6 pt-5 pb-3 rounded-lg shadow-2xl">
+    <section className="absolute -top-16 bg-slate-50 w-[calc(100%-48px)] md:w-[370px] px-6 pt-5 pb-3 rounded-lg shadow-2xl">
       <div className="flex w-full flex-col gap-1-2">
         <CardHeader />
         <CardChip />

@@ -1,9 +1,14 @@
-import { CreditCard } from "@/components"
+import { AddCardForm, CreditCard } from "@/components"
 
 export default function Home() {
   return (
-    <main className="flex min-w-full min-h-screen flex-col items-center justify-between pt-24">
-      <CreditCard />
-    </main>
+    <>
+      <header className={"w-full h-[130px] lg:h-[170px] bg-indigo-600"}>
+      </header>
+      <main className={"flex flex-col items-center w-full h-[calc(100%-130px)] lg:h-[calc(100%-170px)] px-6 bg-slate-50 relative"}>
+        <CreditCard />
+        <AddCardForm />
+      </main>
+    </>
   )
 }
