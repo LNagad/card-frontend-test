@@ -8,8 +8,8 @@ const AddCardForm = () => {
             className="font-bold text-slate-700 text-opacity-60 text-sm"
           >Card Number
           </label>
-          {/* //todo: Card number max length <=16 */}
-          {/* //todo: Card number encrypted, ex: 41**********1234 */}
+          {/* //TODO: Card number max length <= 16 */}
+          {/* //TODO: Card number encrypted, ex: 41**********1234 */}
           <input
             className="p-2 border-gray-400 border-opacity-50 text-black font-medium rounded-lg text-sm"
             type="text"
@@ -21,7 +21,7 @@ const AddCardForm = () => {
             className="font-bold text-slate-700 text-opacity-60 text-sm"
           >Card Holder name
           </label>
-          {/* //todo: Card number max length <=20 | only letters */}
+          {/* //TODO: Card number max length <=20 | only letters */}
           <input className="p-2 border-gray-400 border-opacity-50 text-black font-medium rounded-lg text-sm" />
         </div>
 
