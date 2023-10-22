@@ -8,12 +8,12 @@ const CardNumber = () => {
   const groups = form.cardNumber.match(/.{1,4}/g)
 
   return (
-    <div className="flex w-full justify-between ps-24 relative h-6">
-      <span className="absolute right-0 text-slate-500 text-[10px] -top-4">
-        <p>world</p>
-      </span>
+    <div className="flex w-full  justify-between ps-24 pe-3 relative h-6">
       
-      <div className="flex gap-x-[22px] w-full">
+      <div className="flex gap-x-[26px] justify-end w-full relative">
+        <span className="absolute right-0 text-slate-500 text-[10px] -top-4">
+          <p>world</p>
+        </span>
         {groups && groups.map((group, index) => (
           <p key={index} className="text-slate-500 font-medium">{group}</p>
         ))}  

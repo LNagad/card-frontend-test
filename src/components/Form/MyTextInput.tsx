@@ -16,14 +16,13 @@ interface Props {
 
 export const MyTextInput = ({ label, type = "text", ...props }: Props) => {
   
-  
   const setForm = useFormStore(x => x.setForm)
   const form = useFormStore(x => x.form)
   const [ field, meta ] = useField(props)
   
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
-    console.log(value)
+    
     if (name === "cardNumber" && form.cardNumber.length === 16 && value.length > form.cardNumber.length) return
 
     field.onChange(e)
