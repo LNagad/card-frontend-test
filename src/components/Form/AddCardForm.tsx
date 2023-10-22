@@ -1,20 +1,19 @@
 "use client"
 
+import { useState } from "react"
+import toast from "react-hot-toast"
 import { Formik, Form } from "formik"
-
 import { IFormState, MySelect, MyTextInput } from "."
 import { useFormStore } from "@/store"
-
 import { initialState, validationSchema, inputClass, selectClass } from "./FormAssets"
 
 const AddCardForm = () => {
 
-  const form = useFormStore(x => x.form)
+  const resetFormState = useFormStore(x => x.resetFormState)
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
-  const handleSubmit = async ( values : IFormState ) => {
-    
-    alert( "Card added successfully!")
-
+  const handleSubmit = async ( values : IFormState, reset: () => void ) => {
+    setIsSubmitting(true)
     const resp = await fetch("/api/cards", {
       method: "POST",
       body: JSON.stringify(values),
@@ -23,9 +22,17 @@ const AddCardForm = () => {
       },
     })
     
-    resp.json().then((data) => {
+    resp.json().then((data: { ok: boolean, message: string}) => {
+      if (data.ok) {
+        toast.success("Card "+data.message)
+        reset()
+        resetFormState()
+        setIsSubmitting(false)
 
-      console.log(data)
+      } else {
+        toast.error(data.message)
+        setIsSubmitting(false)
+      }
     })
   }
 
@@ -35,10 +42,10 @@ const AddCardForm = () => {
       
       <Formik
         initialValues={initialState}
-        onSubmit={handleSubmit}
+        onSubmit={e => console.log() }
         validationSchema={validationSchema}
       >
-        {( { isValid, isSubmitting } ) => (
+        {( { isValid, resetForm, values } ) => (
           <Form className="w-full h-full relative flex flex-col justify-start gap-y-4">
               
             <MyTextInput 
@@ -107,6 +114,7 @@ const AddCardForm = () => {
               <button
                 disabled={!isValid || isSubmitting}
                 type="submit"
+                onClick={() => handleSubmit(values, resetForm)}
                 className="bg-indigo-600 flex items-center justify-center text-white rounded-xl w-[70%] py-3 px-2 font-bold text-sm
                 disabled:bg-indigo-400 disabled:text-gray-300 disabled:cursor-not-allowed
                 hover:bg-indigo-700 transition-all duration-300 ease-in-out"
