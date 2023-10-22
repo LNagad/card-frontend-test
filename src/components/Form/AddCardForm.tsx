@@ -19,7 +19,7 @@ const AddCardForm = () => {
 
   
   return (
-    <section className="w-full h-full md:w-[370px] mt-48">
+    <section className="w-full h-full sm:w-[370px] mt-48">
       
       <Formik
         initialValues={initialState}
