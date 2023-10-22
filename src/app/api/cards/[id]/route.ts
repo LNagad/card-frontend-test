@@ -24,7 +24,17 @@ export async function PUT(req: Request, { params }: { params: Params } ) {
     
     if (!card) return NextResponse.json({ ok: false, message: "Card not found" }, {status: 404})
 
-    return NextResponse.json({ ok: true, message: "Form submitted successfully" }, {status: 200})
+    card.cardNumber = form.cardNumber
+    card.cardHolder = form.cardHolder
+    card.month = form.month
+    card.year = form.year
+    card.cvv = form.cvv
+
+    console.log(card)
+    
+    await card.save()
+
+    return NextResponse.json({ ok: true, message: "Card updated successfully!", data: card }, {status: 200})
   } catch (error) {
     
     // If validation fails, return validation errors to the client

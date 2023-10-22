@@ -2,24 +2,27 @@ import * as Yup from "yup"
 
 export const validationSchema =   Yup.object({
   cardNumber: Yup.string()
-    .matches(/^[0-9]+$/, "Only numbers are allowed")
-    .max(16, "This field should be 16 characters maximum")
-    .min(16, "This field should be 16 characters minimum")
-    .required("This field is required"),
+    .matches(/^[0-9]+$/, "El número de la tarjeta solo puede contener números")
+    .max(16, "El número de la tarjeta debe tener un máximo de 16 caracteres")
+    .min(16, "El número de la tarjeta debe tener un mínimo de 16 caracteres")
+    .required("El número de la tarjeta es obligatorio"),
   cardHolder: Yup.string()
-    .matches(/^[a-zA-Z\s]+$/, "Only letters are allowed")
-    .max(20, "This field should be 20 characters or less")
-    .required("This field is required"),
+    .matches(/^[a-zA-Z\s]+$/, "El nombre del titular solo puede contener letras")
+    .max(20, "El nombre del titular debe tener 20 caracteres o menos")
+    .required("El nombre del titular es obligatorio"),
   cvv: Yup.string()
-    .max(3, "This field should be 3 characters maximum")
-    .min(3, "This field should be 3 characters minimum")
-    .matches(/^[0-9]+$/, "Only numbers are allowed")
-    .required("Required"),
-  year: Yup.string()
-    .required("Required"),
-  month: Yup.string()
-  // .notOneOf([ "it-jr" ], "This option is not allowed")
-    .required("Required")
+    .max(3, "El CVV debe tener un máximo de 3 caracteres")
+    .min(3, "El CVV debe tener un mínimo de 3 caracteres")
+    .matches(/^[0-9]+$/, "El CVV solo puede contener números")
+    .required("El CVV es obligatorio"),
+  year: Yup.number()
+    .min(22, "El año debe estar entre 22 y 28")
+    .max(28, "El año debe estar entre 22 y 28")
+    .required("El año es obligatorio"),
+  month: Yup.number()
+    .min(1, "El mes debe estar entre 1 y 12")
+    .max(12, "El mes debe estar entre 1 y 12")
+    .required("El mes es obligatorio")
 })
 
 export const initialState = {
