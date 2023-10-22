@@ -18,7 +18,7 @@ export const MyTextInput = ({ label, type = "text", ...props }: Props) => {
 
   return (
     <>
-      <label htmlFor={ props.id || props.name }>{ label }</label>
+      <label className="font-bold text-slate-700 text-opacity-60 text-sm" htmlFor={ props.id || props.name }>{ label }</label>
       <input className='form-control' type={ type } { ...field } { ...props } />
       <ErrorMessage className="text-sm text-red-500 font-medium" name={ props.name } component='span' />
 
