@@ -5,16 +5,42 @@ import { NextResponse } from "next/server"
 import { creditCard } from "@/models"
 import { IFormState, validationSchema } from "@/components"
 import { ValidationError } from "yup"
+import mongoose from "mongoose"
+
 
 interface Params {
     id: string
 }
 
+
+export async function GET(req: Request, { params }: { params: Params } ) {
+  const { id } = params
+  try {
+    
+    if (!mongoose.Types.ObjectId.isValid(id)) return NextResponse.json({ ok: false, message: "Invalid id" }, {status: 400})
+        
+    await connectDB()
+
+    const card = await creditCard.findById(id)
+
+    if (!card) return NextResponse.json({ ok: false, message: "Card not found" }, {status: 404})
+
+    return NextResponse.json({ ok: true, message: "Card fetched successfully!", data: card }, {status: 200})
+  } catch (error) {
+
+    return NextResponse.json({ ok: false, message: error  }, {status: 400})
+  }
+}
+
+
 export async function PUT(req: Request, { params }: { params: Params } ) {
   const { id } = params
   try {
+
+    if (!mongoose.Types.ObjectId.isValid(id)) return NextResponse.json({ ok: false, message: "Invalid id" }, {status: 400})
+        
     const form = await req.json() as IFormState
-    console.log(form)
+    
     // If validation is successful, continue with form processing
     await validationSchema.validate(form, { abortEarly: false })
     
@@ -29,8 +55,6 @@ export async function PUT(req: Request, { params }: { params: Params } ) {
     card.month = form.month
     card.year = form.year
     card.cvv = form.cvv
-
-    console.log(card)
     
     await card.save()
 
@@ -49,5 +73,25 @@ export async function PUT(req: Request, { params }: { params: Params } ) {
     })
   
     return NextResponse.json({ ok: false, errors: errors }, {status: 400})
+  }
+}
+
+
+export async function DELETE(req: Request, { params }: { params: Params } ) {
+  const { id } = params
+  try {
+    
+    if (!mongoose.Types.ObjectId.isValid(id)) return NextResponse.json({ ok: false, message: "Invalid id" }, {status: 400})
+        
+    await connectDB()
+    
+    const card = await creditCard.findByIdAndDelete(id)
+    
+    if (!card) return NextResponse.json({ ok: false, message: "Card not found" }, {status: 404})
+
+    return NextResponse.json({ ok: true, message: "Card deleted successfully!", id: card._id }, {status: 200})
+  } catch (error) {
+
+    return NextResponse.json({ ok: false, message: error  }, {status: 400})
   }
 }
